@@ -13,12 +13,12 @@ const client = mqtt.connect({
 client.on('connect', function () {    
     cron.schedule('*/15 * * * * * * *', () => {
     console.log('>> running routine...');
+        var sensorValueRandom = Math.floor((Math.random() * 1500) + 200);
+        var sensorValueRandomJSON = {sensorValue: sensorValueRandom};
+        var sensorValueJSONString = JSON.stringify(sensorValueRandomJSON);
+        console.log(sensorValueJSONString);
         
-        let sensorValue = Math.floor((Math.random() * 1500) + 200);
-        sensorValue = JSON.stringify(sensorValue);
-        console.log(sensorValue);
-        
-        client.publish('sensor-simulation-iot', sensorValue, function (err) {
+        client.publish('sensor-simulation-iot', sensorValueJSONString, function (err) {
             if (!err) { 
                 console.log(">> message published...");
             }
